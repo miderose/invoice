@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /.project
 
 /.pydevproject
@@ -7,3 +8,9 @@
 *.pyc
 
 /django/*
+=======
+*.log
+*.pot
+*.pyc
+local_settings.py
+>>>>>>> 845b2e5e09ced3490e0f1f0aef2e9fdd8037a5d6
