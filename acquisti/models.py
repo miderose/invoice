@@ -54,7 +54,7 @@ class Fattura_acquisto(models.Model):
     numero = models.IntegerField(blank=True, null=True)
     prodotto = models.ManyToManyField(Prodotto, related_name="fatture_acquisto", through="Riga_fattura_acquisto")
     data = models.DateField()
-
+    da_rivedere = models.BooleanField(default=False)
     
     class Meta:
         verbose_name_plural = 'Fatture di acquisto'
@@ -66,6 +66,7 @@ class Riga_fattura_acquisto(models.Model):
     prezzo = models.DecimalField(decimal_places=2, max_digits=10)
     unita_di_misura = models.ForeignKey(Unita_misura)
     quantita = models.FloatField()
+    da_rivedere = models.BooleanField(default=False)
     
     class Meta:
         verbose_name_plural = 'Righe fatture di acquisto'
