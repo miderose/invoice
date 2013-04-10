@@ -32,7 +32,7 @@ class Prezzo_umAdmin(admin.ModelAdmin):
     pass
 
 class Fattura_acquistoAdmin(admin.ModelAdmin):
-    fields = ('fornitore', ['numero', 'data'], 'prodotto')
+    fields = ('fornitore', ('numero', 'data'))
     inlines = [Riga_fattura_acquisto_inline]
 
 
