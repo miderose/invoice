@@ -12,12 +12,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:\Users\User\workspace\APTANA\invoice2\invoice2.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'miderose_invoice_dolcerende',                      # Or path to database file if using sqlite3.
+        'USER': 'miderose_invoice',                      # Not used with sqlite3.
+        'PASSWORD': 'm1kym1ky',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'invoice2.urls'
+ROOT_URLCONF = 'invoice.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 #WSGI_APPLICATION = 'invoice2.wsgi.application'
