@@ -4,6 +4,8 @@ from acquisti.models import Riga_fattura_acquisto, Fornitore,\
     Gruppo_orientativo_iva, Iva, Prodotto, Unita_misura, Fattura_acquisto,\
     Categoria_StudiSett
 
+from django_admin_autocomplete.autocomplete import AutocompleteFKMixin
+
 class Riga_fattura_acquisto_inline(admin.TabularInline):
     model = Riga_fattura_acquisto
     extra = 5
@@ -31,7 +33,22 @@ class Unita_misuraAdmin(admin.ModelAdmin):
 class Prezzo_umAdmin(admin.ModelAdmin):
     pass
 
-class Fattura_acquistoAdmin(admin.ModelAdmin):
+class Fattura_acquistoAdmin(AutocompleteFKMixin, admin.ModelAdmin):
+    class Media:
+        js = (
+              'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'admin-autocomplete/jquery.autocomplete.js',
+        )
+
+        css = {
+            'all': ('admin-autocomplete/jquery.autocomplete.css',),
+        }
+
+    related_search_fields  = {
+                              'prezzo' :{'search': ('prodotto',), 'related': ('prodotto',)},
+                              #'line'     :{'search': ('name',), 'related': ('manufacturer',)},
+        }
+    
     fields = ('fornitore', ('numero', 'data'))
     inlines = [Riga_fattura_acquisto_inline]
 

@@ -48,6 +48,9 @@ class Unita_misura(Unita_misura):
     class Meta:
         verbose_name_plural = 'Unità di misura'
 
+    def __unicode__(self):
+        return self.nome
+
     
 class Fattura_acquisto(models.Model):
     fornitore = models.ForeignKey(Fornitore, related_name="fatture_acquisto")
@@ -58,6 +61,10 @@ class Fattura_acquisto(models.Model):
     
     class Meta:
         verbose_name_plural = 'Fatture di acquisto'
+        
+    def __unicode__(self):
+        return "%s - %s" % (self.fornitore, self.data.strftime("%d/%m/%Y"))
+
 
 
 class Riga_fattura_acquisto(models.Model):
@@ -71,3 +78,5 @@ class Riga_fattura_acquisto(models.Model):
     class Meta:
         verbose_name_plural = 'Righe fatture di acquisto'
 
+    def __unicode__(self):
+        return "Riga:"
