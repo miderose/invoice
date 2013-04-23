@@ -3,11 +3,13 @@ from django.contrib import admin
 from acquisti.models import Riga_fattura_acquisto, Fornitore,\
     Gruppo_orientativo_iva, Iva, Prodotto, Unita_misura, Fattura_acquisto,\
     Categoria_StudiSett
+from common.forms import FatturaAcquistoAdminForm, RigaFatturaAcquistoAdminForm,\
+    ProdottoAdminForm
 
 class Riga_fattura_acquisto_inline(admin.TabularInline):
+    form = RigaFatturaAcquistoAdminForm
     model = Riga_fattura_acquisto
     extra = 5
-
 
 
 class ClienteAdmin(admin.ModelAdmin):
@@ -23,7 +25,7 @@ class IvaAdmin(admin.ModelAdmin):
     pass
 
 class ProdottoAdmin(admin.ModelAdmin):
-    pass
+    form = ProdottoAdminForm
 
 class Unita_misuraAdmin(admin.ModelAdmin):
     pass
@@ -32,15 +34,38 @@ class Prezzo_umAdmin(admin.ModelAdmin):
     pass
 
 class Fattura_acquistoAdmin(admin.ModelAdmin):
-    fields = ('fornitore', ('numero', 'data'))
+    form = FatturaAcquistoAdminForm
+    fields = ('fornitore', ('numero', 'data'), 'da_rivedere', 'note')
     inlines = [Riga_fattura_acquisto_inline]
+    
+    class Media:
+        js = (
+            'http://code.jquery.com/jquery-1.9.1.js',
+            'http://code.jquery.com/ui/1.10.2/jquery-ui.js',
+            'FatturaAcquistoAdmin.js',
+        )
 
+        css = {
+            'all': ('http://code.jquery.com/ui/1.10.2/themes/start/jquery-ui.css',
+                    'FatturaAcquistoAdmin.css'),
+        }
 
 class Fattura_venditaAdmin(admin.ModelAdmin):
     pass
 
 class Riga_fattura_acquistoAdmin(admin.ModelAdmin):
-    pass
+    form = RigaFatturaAcquistoAdminForm
+    class Media:
+        js = (
+            'http://code.jquery.com/jquery-1.9.1.js',
+            'http://code.jquery.com/ui/1.10.2/jquery-ui.js',
+            'FatturaAcquistoAdmin.js',
+        )
+
+        css = {
+            'all': ('http://code.jquery.com/ui/1.10.2/themes/start/jquery-ui.css',
+                    'FatturaAcquistoAdmin.css'),
+        }
 
 class Riga_fattura_venditaAdmin(admin.ModelAdmin):
     pass

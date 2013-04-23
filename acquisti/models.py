@@ -2,11 +2,16 @@
 
 from django.db import models
 from common.models import Anagrafica, Gruppo_orientativo_iva, Iva, Prodotto,\
-    Unita_misura, Fattura
+    Unita_misura
+
+DESTINAZIONE_CHOICES = (("Pasticceria", "Pasticceria"),
+                        ("Bar", "Bar"))
+
 
 class Fornitore(Anagrafica):
     class Meta:
         verbose_name_plural = 'Fornitori'
+        ordering = ("ragione_sociale",)
         
     def __unicode__(self):
         return self.ragione_sociale
@@ -35,6 +40,7 @@ class Categoria_StudiSett(models.Model):
 
 
 class Prodotto(Prodotto):
+    destinazione = models.CharField(max_length=32, choices=DESTINAZIONE_CHOICES, default="Pasticceria")
     categoria_studi_sett = models.ManyToManyField(Categoria_StudiSett)
     
     class Meta:
@@ -48,6 +54,9 @@ class Unita_misura(Unita_misura):
     class Meta:
         verbose_name_plural = 'Unità di misura'
 
+    def __unicode__(self):
+        return self.nome
+
     
 class Fattura_acquisto(models.Model):
     fornitore = models.ForeignKey(Fornitore, related_name="fatture_acquisto")
@@ -55,9 +64,13 @@ class Fattura_acquisto(models.Model):
     prodotto = models.ManyToManyField(Prodotto, related_name="fatture_acquisto", through="Riga_fattura_acquisto")
     data = models.DateField()
     da_rivedere = models.BooleanField(default=False)
+    note = models.TextField(null=True, blank=True)
     
     class Meta:
         verbose_name_plural = 'Fatture di acquisto'
+
+    def __unicode__(self):
+        return "%s - %s" % (self.fornitore, self.data.strftime("%d/%m/%Y"))
 
 
 class Riga_fattura_acquisto(models.Model):
@@ -70,4 +83,7 @@ class Riga_fattura_acquisto(models.Model):
     
     class Meta:
         verbose_name_plural = 'Righe fatture di acquisto'
+
+    def __unicode__(self):
+        return "Riga:"
 
