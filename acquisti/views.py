@@ -37,7 +37,7 @@ def get_lista_unita_misura(request):
     to_return = list(to_return.values_list("nome", flat=True))
     
     return HttpResponse(json.dumps(to_return), mimetype="application/json")
-
+    
 
 
 def get_ragione_sociale_by_id(request):
