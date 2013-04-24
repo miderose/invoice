@@ -5,7 +5,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
-    ('Michele', 'michele@michelederose.it')
+    ('Michele De Rose', 'michele@michelederose.it')
 )
 
 SITE_URL = "http://invoice.dolcerende.com"
