@@ -92,6 +92,24 @@ dismissAddAnotherPopup = function(win, newId, newRepr){
     win.close();
 }
 
+function calcola_totale_riga(obj){
+    var prezzo = obj.parent().parent().find(".field-prezzo input").val();
+    var quantita = obj.parent().parent().find(".field-quantita input").val();
+    
+    if (prezzo == "" || quantita == ""){
+        return;
+    }
+    
+    prezzo = parseFloat(prezzo.replace(",", "."));
+    quantita = parseFloat(quantita.replace(",", "."));
+
+    var totale = prezzo * quantita;
+    
+    totale = totale.toFixed(5);
+    
+    obj.parent().parent().find(".field-totale_riga input").val(totale);
+};
+
 $(function(){
     append_addNew_button("fornitore", ".field-fornitore div");
     $(".field-prodotto").not("#righe_fattura_acquisto-empty .field-prodotto").each(function(index){
@@ -116,5 +134,17 @@ $(function(){
     $(".dynamic-righe_fattura_acquisto .field-unita_di_misura input").autocomplete({
         source: "/get-lista-unita-misura/",
         minLength: 1,
+    });
+
+    $(".field-prezzo input[type='text']").not("#righe_fattura_acquisto-empty .field-prezzo input").each(function(index){
+        $(this).change(function(){
+            calcola_totale_riga($(this))
+        });
+    });
+    
+    $(".field-quantita input[type='text']").not("#righe_fattura_acquisto-empty .field-quantita input").each(function(index){
+        $(this).change(function(){
+            calcola_totale_riga($(this))
+        });
     });
 });

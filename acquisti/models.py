@@ -65,12 +65,20 @@ class Fattura_acquisto(models.Model):
     data = models.DateField()
     da_rivedere = models.BooleanField(default=False)
     note = models.TextField(null=True, blank=True)
+    totale = 0.0
     
     class Meta:
         verbose_name_plural = 'Fatture di acquisto'
 
     def __unicode__(self):
         return "%s - %s" % (self.fornitore, self.data.strftime("%d/%m/%Y"))
+    
+    def get_totale(self):
+        totale = 0.0 #convertire in decimal
+        for riga in self.righe_fattura_acquisto.all():
+            totale += riga.get_totale()
+        
+        return totale
 
 
 class Riga_fattura_acquisto(models.Model):
@@ -80,10 +88,13 @@ class Riga_fattura_acquisto(models.Model):
     unita_di_misura = models.ForeignKey(Unita_misura)
     quantita = models.FloatField()
     da_rivedere = models.BooleanField(default=False)
+    totale = 0.0
     
     class Meta:
         verbose_name_plural = 'Righe fatture di acquisto'
 
     def __unicode__(self):
         return "Riga:"
-
+    
+    def get_totale(self):
+        return self.prezzo * self.quantita

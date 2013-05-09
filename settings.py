@@ -140,11 +140,6 @@ LOGGING = {
     }
 }
 
-try:
-    from local_settings import *
-except:
-    pass
-
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = '/home/miderose/webapps/static_invoice_dolcerende_com/media/'
@@ -163,3 +158,9 @@ STATIC_ROOT = '/home/miderose/webapps/static_invoice_dolcerende_com/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = 'http://invoice.dolcerende.com/static/'
+
+
+try:
+    from local_settings import *
+except:
+    pass

@@ -35,7 +35,7 @@ class Prezzo_umAdmin(admin.ModelAdmin):
 
 class Fattura_acquistoAdmin(admin.ModelAdmin):
     form = FatturaAcquistoAdminForm
-    fields = ('fornitore', ('numero', 'data'), 'da_rivedere', 'note')
+    fields = ('fornitore', ('numero', 'data'), 'da_rivedere', 'note', 'totale')
     inlines = [Riga_fattura_acquisto_inline]
     
     class Media:
@@ -95,42 +95,3 @@ admin.site.register(Riga_fattura_acquisto, Riga_fattura_acquistoAdmin)
 # admin.site.register(DocumentoTrasporto, DocumentoTrasportoAdmin)
 # admin.site.register(Riga_ddt, Riga_ddtAdmin)
 admin.site.register(Categoria_StudiSett, Categoria_StudiSettAdmin)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

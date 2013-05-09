@@ -8,6 +8,7 @@ from django import forms
 class FatturaAcquistoAdminForm(ModelForm):
     fornitore = forms.CharField(label="Fornitore")#widget=forms.TextInput(attrs={'class':'special'}))
     numero = forms.CharField(label="Fattura nr.", required=False)
+    totale = forms.DecimalField(label="Totale imponibile fattura", decimal_places=5, required=False)
 
     class Meta:
         model = Fattura_acquisto
@@ -43,6 +44,7 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
     prodotto = forms.CharField(label="Prodotto")
     unita_di_misura = forms.CharField(label="Unità di misura")
     prezzo = forms.CharField(label="Prezzo unitario")
+    totale_riga = forms.DecimalField(label="Totale riga", decimal_places=5)
 
     class Meta:
         model = Riga_fattura_acquisto
