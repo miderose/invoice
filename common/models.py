@@ -3,7 +3,7 @@
 from django.db import models
 
 class Anagrafica(models.Model):
-    ragione_sociale = models.CharField(max_length=255)
+    ragione_sociale = models.CharField(max_length=255, unique=True)
     indirizzo = models.CharField(max_length=255, null=True, blank=True)
     comune = models.CharField(max_length=255, null=True, blank=True)
     provincia = models.CharField(max_length=3, null=True, blank=True)

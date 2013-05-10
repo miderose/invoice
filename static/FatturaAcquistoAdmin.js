@@ -110,7 +110,22 @@ function calcola_totale_riga(obj){
     obj.parent().parent().find(".field-totale_riga input").val(totale);
 };
 
+function calcola_totale_fattura(){
+    var totale = 0.0;
+    $(".field-totale_riga input").each(function(){
+        var totale_riga = $(this).val();
+        if (totale_riga != ""){
+            totale += parseFloat(totale_riga);
+        }
+    });
+    
+    $("#id_totale").val(totale.toFixed(5));
+}
+
 $(function(){
+    $("#id_totale").attr("disabled", "disabled");
+    $(".field-totale_riga input").attr("disabled", "disabled");
+    
     append_addNew_button("fornitore", ".field-fornitore div");
     $(".field-prodotto").not("#righe_fattura_acquisto-empty .field-prodotto").each(function(index){
         append_addNew_button("prodotto", "#" + $(this).parent().attr("id")+ " .field-prodotto");
@@ -137,14 +152,19 @@ $(function(){
     });
 
     $(".field-prezzo input[type='text']").not("#righe_fattura_acquisto-empty .field-prezzo input").each(function(index){
+        calcola_totale_riga($(this));
         $(this).change(function(){
             calcola_totale_riga($(this))
+            calcola_totale_fattura();
         });
     });
     
     $(".field-quantita input[type='text']").not("#righe_fattura_acquisto-empty .field-quantita input").each(function(index){
         $(this).change(function(){
-            calcola_totale_riga($(this))
+            calcola_totale_riga($(this));
+            calcola_totale_fattura();
         });
     });
+    
+    calcola_totale_fattura();
 });

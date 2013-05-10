@@ -26,8 +26,17 @@ class FatturaAcquistoAdminForm(ModelForm):
         if fornitore.isdigit():
             fornitore = Fornitore.objects.get(id=fornitore)
         else:
-            fornitore = Fornitore.objects.get(ragione_sociale=fornitore)
+            try:
+                fornitore = Fornitore.objects.get(ragione_sociale__icontains=fornitore)
+            except Fornitore.DoesNotExist:
+                raise forms.ValidationError('Il fornitore "%s" non esiste. Devi crearlo.' % fornitore)
         return fornitore
+
+    def clean_numero(self):
+        numero = self.cleaned_data['numero'].strip()
+        if len(numero) < 1:
+            numero = None
+        return numero
 
 
 class ProdottoAdminForm(ModelForm):
@@ -44,7 +53,7 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
     prodotto = forms.CharField(label="Prodotto")
     unita_di_misura = forms.CharField(label="Unità di misura")
     prezzo = forms.CharField(label="Prezzo unitario")
-    totale_riga = forms.DecimalField(label="Totale riga", decimal_places=5)
+    totale_riga = forms.DecimalField(label="Totale riga", decimal_places=5, required=False)
 
     class Meta:
         model = Riga_fattura_acquisto
@@ -65,12 +74,17 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
                 
     def clean_prodotto(self):
         prodotto = self.cleaned_data['prodotto'].strip()
-        prodotto = Prodotto.objects.get(nome=prodotto)
-        
+        try:
+            prodotto = Prodotto.objects.get(nome__icontains=prodotto)
+        except Prodotto.DoesNotExist:
+            raise forms.ValidationError('Il prodotto "%s" non esiste. Devi crearlo.' % prodotto)
         return prodotto
 
     def clean_unita_di_misura(self):
         unita_di_misura = self.cleaned_data['unita_di_misura'].strip()
-        unita_di_misura = Unita_misura.objects.get(nome=unita_di_misura)
+        try:
+            unita_di_misura = Unita_misura.objects.get(nome=unita_di_misura)
+        except Unita_misura.DoesNotExist:
+            raise forms.ValidationError('L\'unita\' di misura "%s" non esiste. Devi crearla.' % unita_di_misura)
         
         return unita_di_misura

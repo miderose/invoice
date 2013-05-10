@@ -8,8 +8,10 @@ from common.forms import FatturaAcquistoAdminForm, RigaFatturaAcquistoAdminForm,
 
 class Riga_fattura_acquisto_inline(admin.TabularInline):
     form = RigaFatturaAcquistoAdminForm
+    fields = ('prodotto', 'unita_di_misura', 'prezzo', 'quantita', 'totale_riga', 'da_rivedere')
+
     model = Riga_fattura_acquisto
-    extra = 5
+    extra = 10
 
 
 class ClienteAdmin(admin.ModelAdmin):
@@ -35,7 +37,7 @@ class Prezzo_umAdmin(admin.ModelAdmin):
 
 class Fattura_acquistoAdmin(admin.ModelAdmin):
     form = FatturaAcquistoAdminForm
-    fields = ('fornitore', ('numero', 'data'), 'da_rivedere', 'note', 'totale')
+    fields = ('fornitore', ('numero', 'data'), ('note', 'da_rivedere'), 'totale')
     inlines = [Riga_fattura_acquisto_inline]
     
     class Media:
@@ -55,6 +57,7 @@ class Fattura_venditaAdmin(admin.ModelAdmin):
 
 class Riga_fattura_acquistoAdmin(admin.ModelAdmin):
     form = RigaFatturaAcquistoAdminForm
+
     class Media:
         js = (
             'http://code.jquery.com/jquery-1.9.1.js',

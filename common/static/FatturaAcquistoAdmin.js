@@ -123,6 +123,9 @@ function calcola_totale_fattura(){
 }
 
 $(function(){
+    $("#id_totale").attr("disabled", "disabled");
+    $(".field-totale_riga input").attr("disabled", "disabled");
+    
     append_addNew_button("fornitore", ".field-fornitore div");
     $(".field-prodotto").not("#righe_fattura_acquisto-empty .field-prodotto").each(function(index){
         append_addNew_button("prodotto", "#" + $(this).parent().attr("id")+ " .field-prodotto");

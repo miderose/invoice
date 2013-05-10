@@ -1,3 +1,27 @@
 ul li{
     list-style: none;
 }
+
+.field-prezzo input{
+    text-align: right;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+.field-quantita input{
+    text-align: right;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+.field-totale_riga input{
+    text-align: right;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+#id_totale{
+    text-align: right;
+    color: #000000;
+    background-color: #ffffff;
+}
