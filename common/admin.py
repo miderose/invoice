@@ -28,6 +28,12 @@ class IvaAdmin(admin.ModelAdmin):
 
 class ProdottoAdmin(admin.ModelAdmin):
     form = ProdottoAdminForm
+    
+    class Media:
+        css = {
+            'all': ('ProdottoAdmin.css',),
+        }
+
 
 class Unita_misuraAdmin(admin.ModelAdmin):
     pass
