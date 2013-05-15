@@ -8,7 +8,7 @@ from common.forms import FatturaAcquistoAdminForm, RigaFatturaAcquistoAdminForm,
 
 class Riga_fattura_acquisto_inline(admin.TabularInline):
     form = RigaFatturaAcquistoAdminForm
-    fields = ('prodotto', 'unita_di_misura', 'prezzo', 'quantita', 'totale_riga', 'da_rivedere')
+    fields = ('prodotto', 'unita_di_misura', 'quantita', 'prezzo', 'totale_riga', 'da_rivedere')
 
     model = Riga_fattura_acquisto
     extra = 10

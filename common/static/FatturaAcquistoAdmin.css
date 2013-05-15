@@ -2,6 +2,15 @@ ul li{
     list-style: none;
 }
 
+
+.module table th:nth-of-type(1){
+    width: 40%;
+}
+
+.module table th{
+    width: 10%;
+}
+
 .field-prezzo input{
     text-align: right;
     color: #000000;
@@ -24,4 +33,9 @@ ul li{
     text-align: right;
     color: #000000;
     background-color: #ffffff;
+}
+
+
+.dynamic-righe_fattura_acquisto input{
+    width: 80%;
 }

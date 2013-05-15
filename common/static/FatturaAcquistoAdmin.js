@@ -141,15 +141,35 @@ $(function(){
         minLength: 1,
     });
     
+    $('#id_fornitore').keypress(function (e) {
+        if (e.keyCode == 9) {
+            $(this).trigger(jQuery.Event("keydown", { keyCode: 40 }));
+        }
+    });
+
+
     $(".dynamic-righe_fattura_acquisto .field-prodotto input").autocomplete({
         source: "/get-lista-prodotti/",
         minLength: 1,
     });
-    
+    $('.dynamic-righe_fattura_acquisto .field-prodotto input').keypress(function (e) {
+        if (e.keyCode == 9) {
+            $(this).trigger(jQuery.Event("keydown", { keyCode: 40 }));
+        }
+    });
+
+
     $(".dynamic-righe_fattura_acquisto .field-unita_di_misura input").autocomplete({
         source: "/get-lista-unita-misura/",
         minLength: 1,
     });
+    
+    $('.dynamic-righe_fattura_acquisto .field-unita_di_misura input').keypress(function (e) {
+        if (e.keyCode == 9) {
+            $(this).trigger(jQuery.Event("keydown", { keyCode: 40 }));
+        }
+    });
+
 
     $(".field-prezzo input[type='text']").not("#righe_fattura_acquisto-empty .field-prezzo input").each(function(index){
         calcola_totale_riga($(this));

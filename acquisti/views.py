@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-from acquisti.models import Fornitore, Prodotto, Unita_misura
-from django.http import HttpResponse
 import json
+
+from django.http import HttpResponse
+from django.db.models import Q
+
+from acquisti.models import Fornitore, Prodotto, Unita_misura
+
 
 def get_lista_fornitori(request):
     chars = request.GET.get('term', '')
@@ -30,7 +34,8 @@ def get_lista_prodotti(request):
 def get_lista_unita_misura(request):
     chars = request.GET.get('term', '')
     if chars:
-        to_return = Unita_misura.objects.filter(nome__icontains=chars)
+        query = Q(nome__icontains=chars) | Q(abbreviazione__icontains=chars)
+        to_return = Unita_misura.objects.filter(query)
     else:
         to_return = Unita_misura.objects.all()
     
@@ -49,5 +54,5 @@ def get_nome_prodotto_by_id(request):
 
 
 def get_unita_di_misura_by_id(request):
-    return HttpResponse(Unita_misura.objects.get(id=request.POST.get("id", 0)).nome)
+    return HttpResponse(Unita_misura.objects.get(id=request.POST.get("id", 0)).abbreviazione)
 

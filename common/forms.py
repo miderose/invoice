@@ -1,14 +1,22 @@
 # -*- coding: utf-8 -*-
+from django import forms
 from django.forms.models import ModelForm
+
 from acquisti.models import Fattura_acquisto, Fornitore, Riga_fattura_acquisto,\
     Prodotto, Unita_misura, DESTINAZIONE_CHOICES
-from django import forms
+
+DATE_FORMATS = ["%d/%m/%y", # 29/09/84
+                "%d/%m/%Y", # 29/09/1984
+                "%d%m%y",   # 290984
+                "%d%m%Y",   # 29091984
+               ]
 
 
 class FatturaAcquistoAdminForm(ModelForm):
     fornitore = forms.CharField(label="Fornitore")#widget=forms.TextInput(attrs={'class':'special'}))
     numero = forms.CharField(label="Fattura nr.", required=False)
     totale = forms.DecimalField(label="Totale imponibile fattura", decimal_places=5, required=False)
+    data = forms.DateField(label="Data fattura", input_formats=DATE_FORMATS)
 
     class Meta:
         model = Fattura_acquisto
@@ -36,7 +44,7 @@ class FatturaAcquistoAdminForm(ModelForm):
         numero = self.cleaned_data['numero'].strip()
         if len(numero) < 1:
             numero = None
-        return numero
+        return numero        
 
 
 class ProdottoAdminForm(ModelForm):
@@ -68,7 +76,7 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
             pass
         
         try:
-            self.initial['unita_di_misura'] = self.instance.unita_di_misura.nome
+            self.initial['unita_di_misura'] = self.instance.unita_di_misura.abbreviazione
         except:
             pass
                 
@@ -83,7 +91,7 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
     def clean_unita_di_misura(self):
         unita_di_misura = self.cleaned_data['unita_di_misura'].strip()
         try:
-            unita_di_misura = Unita_misura.objects.get(nome=unita_di_misura)
+            unita_di_misura = Unita_misura.objects.get(abbreviazione__iexact=unita_di_misura)
         except Unita_misura.DoesNotExist:
             raise forms.ValidationError('L\'unita\' di misura "%s" non esiste. Devi crearla.' % unita_di_misura)
         
