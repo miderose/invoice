@@ -93,6 +93,9 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
         try:
             unita_di_misura = Unita_misura.objects.get(abbreviazione__iexact=unita_di_misura)
         except Unita_misura.DoesNotExist:
-            raise forms.ValidationError('L\'unita\' di misura "%s" non esiste. Devi crearla.' % unita_di_misura)
+            try:
+                unita_di_misura = Unita_misura.objects.get(nome__iexact=unita_di_misura)
+            except Unita_misura.DoesNotExist:
+                raise forms.ValidationError('L\'unita\' di misura "%s" non esiste. Devi crearla.' % unita_di_misura)
         
         return unita_di_misura
