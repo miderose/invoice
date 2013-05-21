@@ -61,6 +61,7 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
     prodotto = forms.CharField(label="Prodotto")
     unita_di_misura = forms.CharField(label="Unità di misura")
     prezzo = forms.CharField(label="Prezzo unitario")
+    quantita = forms.CharField(label="Quantita")
     totale_riga = forms.DecimalField(label="Totale riga", decimal_places=5, required=False)
 
     class Meta:
@@ -87,6 +88,14 @@ class RigaFatturaAcquistoAdminForm(ModelForm):
         except Prodotto.DoesNotExist:
             raise forms.ValidationError('Il prodotto "%s" non esiste. Devi crearlo.' % prodotto)
         return prodotto
+
+    def clean_prezzo(self):
+        prezzo = self.cleaned_data['prezzo'].strip()
+        return float(prezzo.replace(",", "."))
+
+    def clean_quantita(self):
+        quantita = self.cleaned_data['quantita'].strip()
+        return float(quantita.replace(",", "."))
 
     def clean_unita_di_misura(self):
         unita_di_misura = self.cleaned_data['unita_di_misura'].strip()
