@@ -1,0 +1,14 @@
+SELECT
+acquisti_categoria_studisett.nome,
+
+Sum(acquisti_riga_fattura_acquisto.quantita * acquisti_riga_fattura_acquisto.prezzo)
+FROM
+acquisti_prodotto
+INNER JOIN common_prodotto ON acquisti_prodotto.prodotto_ptr_id = common_prodotto.id
+INNER JOIN acquisti_prodotto_categoria_studi_sett ON acquisti_prodotto_categoria_studi_sett.prodotto_id = acquisti_prodotto.prodotto_ptr_id
+INNER JOIN acquisti_categoria_studisett ON acquisti_prodotto_categoria_studi_sett.categoria_studisett_id = acquisti_categoria_studisett.id
+INNER JOIN acquisti_riga_fattura_acquisto ON acquisti_riga_fattura_acquisto.prodotto_id = acquisti_prodotto.prodotto_ptr_id
+GROUP BY
+acquisti_categoria_studisett.id
+ORDER BY
+acquisti_categoria_studisett.id ASC
